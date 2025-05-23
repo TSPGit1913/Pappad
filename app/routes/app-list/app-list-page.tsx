@@ -552,6 +552,28 @@ const AppListPage: React.FC = () => {
                       </div>
                     );
                   })}
+                  <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div className="p-6">
+                          <div className="flex items-start">
+                            <div className="ml-4 flex-1 min-w-0">
+                              <div className="flex items-center justify-between">
+                                <h3 className="text-lg font-medium text-gray-900 truncate">
+                                  ビルダーテスト
+                                </h3>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mt-5 pt-5 border-t border-gray-100 flex justify-between items-center">
+                            <button
+                              type="button"
+                              onClick={() => navigate(`/app-builder-test`)}
+                              className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                              編集
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                 </div>
               )}
               

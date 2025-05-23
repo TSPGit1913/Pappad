@@ -6,76 +6,9 @@ import type { SidebarTab } from '../../types/sidebar-tab';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Canvas from '../../components/builder/canvas';
+import CanvasTest from '../../components/builder/canvas-test';
 import PaletteItemComponent from '../../components/builder/palette-Item';
 import PropertyEditor from '../../components/builder/property-editor';
-
-
-// パレットアイテムのリスト
-const paletteItems: PaletteItem[] = [
-    {
-      type: 'button',
-      name: 'ボタン',
-      icon: 'Bt',
-      defaultProperties: {
-        text: 'ボタン',
-        color: '#3B82F6',
-        size: 'medium',
-      },
-      defaultSize: { width: 120, height: 40 }
-    },
-    {
-      type: 'textInput',
-      name: 'テキスト入力',
-      icon: 'In',
-      defaultProperties: {
-        placeholder: 'ここに入力...',
-        label: 'ラベル',
-        required: false,
-      },
-      defaultSize: { width: 200, height: 60 }
-    },
-    {
-      type: 'text',
-      name: 'テキスト',
-      icon: 'Tx',
-      defaultProperties: {
-        content: 'テキストを入力',
-        fontSize: 16,
-        color: '#000000',
-      },
-      defaultSize: { width: 200, height: 30 }
-    },
-    {
-      type: 'image',
-      name: '画像',
-      icon: 'Im',
-      defaultProperties: {
-        url: 'https://via.placeholder.com/150',
-        alt: '画像の説明',
-      },
-      defaultSize: { width: 150, height: 150 }
-    },
-    {
-      type: 'container',
-      name: 'コンテナ',
-      icon: 'Co',
-      defaultProperties: {
-        backgroundColor: '#F3F4F6',
-        borderRadius: 4,
-      },
-      defaultSize: { width: 300, height: 200 }
-    },
-    {
-      type: 'chart',
-      name: 'チャート',
-      icon: 'Ch',
-      defaultProperties: {
-        chartType: 'bar',
-        dataSource: 'default',
-      },
-      defaultSize: { width: 300, height: 200 }
-    }
-];
 
 // メインコンポーネント
 const AppBuilderPage: React.FC = () => {
@@ -255,113 +188,14 @@ const AppBuilderPage: React.FC = () => {
                
             {/* 左側のパネル（パレット） */}
             <div className="w-64 border-r border-gray-200 bg-white overflow-y-auto flex flex-col">
-              <div className="px-4 py-5 border-b border-gray-200">
-                <h2 className="text-lg font-medium text-gray-900">コンポーネント</h2>
-                <p className="mt-1 text-sm text-gray-500">
-                  ドラッグしてキャンバスに配置
-                </p>
+              <div className="px-4">
+                <h2 className="text-lg font-medium text-gray-900">パレット</h2>
               </div>
   
-              <div className="p-4 flex-1 overflow-y-auto">
-                <div className="space-y-1 mb-4">
-                  <button
-                    onClick={() => setActiveTab('palette')}
-                    className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md ${
-                      activeTab === 'palette'
-                        ? 'bg-indigo-100 text-indigo-700'
-                        : 'text-gray-600 hover:bg-gray-100'
-                    }`}
-                  >
-                    <svg className="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                    パレット
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('layers')}
-                    className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md ${
-                      activeTab === 'layers'
-                        ? 'bg-indigo-100 text-indigo-700'
-                        : 'text-gray-600 hover:bg-gray-100'
-                    }`}
-                  >
-                    <svg className="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                    レイヤー
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('assets')}
-                    className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md ${
-                      activeTab === 'assets'
-                        ? 'bg-indigo-100 text-indigo-700'
-                        : 'text-gray-600 hover:bg-gray-100'
-                    }`}
-                  >
-                    <svg className="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    アセット
-                  </button>
+              <div className="p-2 flex-1 overflow-y-auto">
+                <div className="mt-4">
+                  <PaletteItemComponent />
                 </div>
-  
-                {activeTab === 'palette' && (
-                  <div className="mt-4">
-                    {paletteItems.map((item) => (
-                      <PaletteItemComponent
-                        key={item.type}
-                        item={item}
-                      />
-                    ))}
-                  </div>
-                )}
-  
-                {activeTab === 'layers' && (
-                  <div className="mt-4">
-                    <p className="text-sm text-gray-500 mb-2">
-                      {canvasItems.length}個のコンポーネント
-                    </p>
-                    {canvasItems.map((item, index) => (
-                      <div
-                        key={item.id}
-                        className={`flex items-center p-2 mb-1 rounded cursor-pointer ${
-                          selectedItemId === item.id
-                            ? 'bg-indigo-50 border border-indigo-200'
-                            : 'hover:bg-gray-50'
-                        }`}
-                        onClick={() => setSelectedItemId(item.id)}
-                      >
-                        <div className="flex-shrink-0 h-6 w-6 rounded bg-gray-100 flex items-center justify-center mr-2">
-                          <span className="text-gray-600 text-xs">{index + 1}</span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
-                            {item.name}
-                          </p>
-                        </div>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDeleteItem(item.id);
-                          }}
-                          className="p-1 text-gray-400 hover:text-red-500"
-                        >
-                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-  
-                {activeTab === 'assets' && (
-                  <div className="mt-4">
-                    <p className="text-sm text-gray-500">
-                      アセットライブラリ（準備中）
-                    </p>
-                  </div>
-                )}
               </div>
               
               <div className="p-4 border-t border-gray-200">
@@ -377,7 +211,7 @@ const AppBuilderPage: React.FC = () => {
             {/* 中央のキャンバス */}
             <div className="flex-1 relative bg-gray-100 overflow-auto">
               
-              <Canvas
+              {/* <Canvas
                 items={canvasItems}
                 selectedItemId={selectedItemId}
                 onSelectItem={setSelectedItemId}
@@ -387,7 +221,8 @@ const AppBuilderPage: React.FC = () => {
                 showGrid={showGrid}
                 snapToGrid={snapToGrid}
                 onGridSettingsChange={handleGridSettingsChange}
-              />
+              /> */}
+              <CanvasTest />
             </div>
   
             {/* 右側のプロパティパネル */}

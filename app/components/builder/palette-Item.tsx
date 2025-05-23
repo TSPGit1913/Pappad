@@ -2,9 +2,10 @@ import { useDrag } from 'react-dnd';
 import { useRef } from 'react';
 import type { PaletteItem } from '../../types/palette-item';
 import { ItemTypes } from '../../types/item';
+import { paletteItems } from '../utils/palette-items';
 
-// パレットアイテムコンポーネント
-const PaletteItemComponent: React.FC<{item: PaletteItem;}> = ({ item }) => {
+
+const Item: React.FC<{item: PaletteItem}> = ({ item }) => {
     const ref = useRef<HTMLDivElement>(null);
     const [{ isDragging }, drag] = useDrag(() => ({
       type: ItemTypes.PALETTE_ITEM,
@@ -20,18 +21,25 @@ const PaletteItemComponent: React.FC<{item: PaletteItem;}> = ({ item }) => {
     }));
     
     drag(ref);
-  
+
     return (
       <div
         ref={ref}
-        className={`flex items-center p-3 mb-2 bg-white rounded-md shadow-sm border border-gray-200 cursor-move hover:shadow-md transition-shadow ${isDragging ? 'opacity-50' : ''}`}
+        className={`flex items-center p-2 mb-1 bg-white rounded-md shadow-sm border border-gray-200 cursor-move hover:shadow-md transition-shadow ${isDragging ? 'opacity-50' : ''}`}
       >
-        <div className="flex-shrink-0 h-8 w-8 rounded bg-indigo-100 flex items-center justify-center mr-3">
-          <span className="text-indigo-600 text-sm font-medium">{item.icon}</span>
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
-        </div>
+        <span className="material-icons text-primary mr-2">{item.icon}</span>
+        <span className="text-sm">{item.name}</span>
+      </div>
+    );
+};
+
+// パレットアイテムコンポーネント
+const PaletteItemComponent: React.FC = () => {
+    return (
+      <div>
+        {paletteItems.map((item) => (
+          <Item key={item.type} item={item} />
+        ))}
       </div>
     );
 };
